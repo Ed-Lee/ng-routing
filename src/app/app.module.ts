@@ -26,6 +26,7 @@ import {environment} from "../environments/environment";
     HttpModule,
     environment.production ?
       InMemoryWebApiModule.forRoot(ProductData, {delay: 1000}) : [],
+    AppRoutingModule,
     ProductModule,
     UserModule,
     MessageModule
