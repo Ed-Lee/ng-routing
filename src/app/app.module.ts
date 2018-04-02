@@ -29,6 +29,7 @@ import {environment} from "../environments/environment";
     ProductModule,
     UserModule,
     MessageModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
