@@ -1,26 +1,33 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import {Injectable} from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { IProduct } from './product';
+import {IProduct} from './product';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {catchError, tap} from "rxjs/operators";
+import {of} from "rxjs/observable/of";
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-type': 'application/json'})
+};
 
 @Injectable()
 export class ProductService {
     private baseUrl = 'api/products';
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     getProducts(): Observable<IProduct[]> {
-        return this.http.get(this.baseUrl)
-            .map(this.extractData)
-            .do(data => console.log('getProducts: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+        return this.http.get<IProduct[]>(this.baseUrl)
+          .pipe(
+            tap(data => console.log('getProducts: ' + JSON.stringify(data))),
+            catchError(this.handleError('getProducts', []))
+          )
     }
 
     getProduct(id: number): Observable<IProduct> {
@@ -28,59 +35,79 @@ export class ProductService {
             return Observable.of(this.initializeProduct());
         };
         const url = `${this.baseUrl}/${id}`;
-        return this.http.get(url)
-            .map(this.extractData)
-            .do(data => console.log('getProduct: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+        return this.http.get<IProduct>(url)
+          .pipe(
+            tap(data => console.log('getProduct: ' + JSON.stringify(data))),
+            catchError(this.handleError<IProduct>(`getProduct id=${id}`))
+          );
     }
 
-    deleteProduct(id: number): Observable<Response> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
+    deleteProduct(id: number): Observable<IProduct> {
         const url = `${this.baseUrl}/${id}`;
-        return this.http.delete(url, options)
-            .do(data => console.log('deleteProduct: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+      return this.http.delete<IProduct>(url, httpOptions)
+        .pipe(
+          tap(data => console.log('deleteProduct: ' + JSON.stringify(data))),
+          catchError(this.handleError<IProduct>(`deleteProduct id:${id}`))
+        );
+
     }
 
     saveProduct(product: IProduct): Observable<IProduct> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
         if (product.id === 0) {
-            return this.createProduct(product, options);
+            return this.createProduct(product, httpOptions);
         }
-        return this.updateProduct(product, options);
+        return this.updateProduct(product, httpOptions);
     }
 
-    private createProduct(product: IProduct, options: RequestOptions): Observable<IProduct> {
+    private createProduct(product: IProduct, options: {}): Observable<IProduct> {
         product.id = undefined;
-        return this.http.post(this.baseUrl, product, options)
-            .map(this.extractData)
-            .do(data => console.log('createProduct: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+      return this.http.post<IProduct>(this.baseUrl, product, options)
+        .pipe(
+          tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+          catchError(this.handleError<IProduct>('createProduct'))
+        );
     }
 
-    private updateProduct(product: IProduct, options: RequestOptions): Observable<IProduct> {
+    private updateProduct(product: IProduct, options: {}): Observable<IProduct> {
         const url = `${this.baseUrl}/${product.id}`;
-        return this.http.put(url, product, options)
-            .map(() => product)
-            .do(data => console.log('updateProduct: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+        return this.http.put<IProduct>(url, product, options)
+          .pipe(
+            tap(data => console.log('updateProduct: ' + JSON.stringify(data))),
+            catchError(this.handleError<IProduct>('updateProduct'))
+          );
     }
 
-    private extractData(response: Response) {
-        let body = response.json();
-        return body.data || {};
-    }
+    // private extractData(response: Response) {
+    //     let body = response.json();
+    //     return body.data || {};
+    // }
 
-    private handleError(error: Response): Observable<any> {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
-    }
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
+    // private handleError(error: Response): Observable<any> {
+    //     // in a real world app, we may send the server to some remote logging infrastructure
+    //     // instead of just logging it to the console
+    //     console.error(error);
+    //     return Observable.throw(error.json().error || 'Server error');
+    // }
 
     initializeProduct(): IProduct {
         // Return an initialized object
