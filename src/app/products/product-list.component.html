@@ -43,7 +43,7 @@
                             <img *ngIf="showImage && product.imageUrl"
                                  [src]="product.imageUrl"
                                  [title]="product.productName | uppercase"
-                                 [style.width.px]="imageWidth" 
+                                 [style.width.px]="imageWidth"
                                  [style.margin.px]="imageMargin">
                         </td>
                         <td><a>
@@ -52,7 +52,7 @@
                         </td>
                         <td>{{ product.productCode | lowercase }}</td>
                         <td>{{ product.releaseDate }}</td>
-                        <td>{{ product.price | currency:"USD":true:"1.2-2" }}</td>
+                        <td>{{ product.price | currency:"USD":"symbol":"1.2-2" }}</td>
                         <td>
                             <ai-star [rating]="product.starRating">
                             </ai-star>
