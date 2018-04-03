@@ -22,7 +22,10 @@ export class ProductEditComponent implements OnInit{
                 private router: Router) { }
 
     ngOnInit() {
-      this.onProductRetrieved(this.route.snapshot.data['product']);
+      this.route.data.subscribe(
+        data => this.onProductRetrieved(data['product'])
+      );
+      //this.onProductRetrieved(this.route.snapshot.data['product']);
     }
 
 
