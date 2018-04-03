@@ -5,10 +5,10 @@
 
   <div class="panel-body" *ngIf="product">
     <div class="wizard">
-      <a href="">
+      <a [routerLink]="['info']">
         Basic Information
       </a>
-      <a href="">
+      <a [routerLink]="['tags']">
         Search Tags
       </a>
     </div>
