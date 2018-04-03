@@ -9,17 +9,17 @@
               (ngSubmit)="saveProduct()"
               #productForm="ngForm" >
             <fieldset>
-                <div class="form-group" 
-                     [ngClass]="{'has-error': (productNameVar.touched || 
-                                               productNameVar.dirty) && 
+                <div class="form-group"
+                     [ngClass]="{'has-error': (productNameVar.touched ||
+                                               productNameVar.dirty) &&
                                                !productNameVar.valid }">
-                    <label class="col-md-2 control-label" 
+                    <label class="col-md-2 control-label"
                            for="productNameId">Product Name</label>
 
                     <div class="col-md-8">
-                        <input class="form-control" 
-                                id="productNameId" 
-                                type="text" 
+                        <input class="form-control"
+                                id="productNameId"
+                                type="text"
                                 placeholder="Name (required)"
                                 required
                                 minlength="3"
@@ -38,17 +38,17 @@
                         </span>
                     </div>
                 </div>
-                
-                <div class="form-group" 
-                     [ngClass]="{'has-error': (productCodeVar.touched || 
-                                               productCodeVar.dirty) && 
+
+                <div class="form-group"
+                     [ngClass]="{'has-error': (productCodeVar.touched ||
+                                               productCodeVar.dirty) &&
                                                !productCodeVar.valid }">
                     <label class="col-md-2 control-label" for="productCodeId">Product Code</label>
 
                     <div class="col-md-8">
-                        <input class="form-control" 
-                                id="productCodeId" 
-                                type="text" 
+                        <input class="form-control"
+                                id="productCodeId"
+                                type="text"
                                 placeholder="Code (required)"
                                 required
                                 [(ngModel)] = product.productCode
@@ -63,13 +63,13 @@
                         </span>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="descriptionId">Description</label>
 
                     <div class="col-md-8">
-                        <textarea class="form-control" 
-                                id="descriptionId" 
+                        <textarea class="form-control"
+                                id="descriptionId"
                                 placeholder="Description"
                                 rows=3
                                 [(ngModel)] = product.description
@@ -89,7 +89,7 @@
                             </button>
                         </span>
                         <span>
-                            <a class="btn btn-default">
+                            <a [routerLink]="['/products']" class="btn btn-default">
                                 Cancel
                             </a>
                         </span>
@@ -98,7 +98,7 @@
                                (click)="deleteProduct()">
                                 Delete
                             </a>
-                        </span>       
+                        </span>
                      </div>
                 </div>
             </fieldset>
