@@ -44,9 +44,9 @@
             </div>
 
             <div class="col-md-6" *ngIf="product.imageUrl">
-                <img class="center-block img-responsive" 
-                     [style.width.px]="200" 
-                     [style.margin.px]="2" 
+                <img class="center-block img-responsive"
+                     [style.width.px]="200"
+                     [style.margin.px]="2"
                      [src]="product.imageUrl"
                      [title]="product.productName">
             </div>
@@ -58,7 +58,7 @@
         <a class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
-        <a class="btn btn-primary" style="width:80px;margin-left:10px">
+        <a [routerLink]="['/products', product.id, 'edit']" class="btn btn-primary" style="width:80px;margin-left:10px">
             Edit
         </a>
     </div>
