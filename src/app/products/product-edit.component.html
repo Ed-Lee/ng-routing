@@ -5,11 +5,11 @@
 
   <div class="panel-body" *ngIf="product">
     <div class="wizard">
-      <a [routerLink]="['info']">
-        Basic Information
+      <a class="nav-link" [routerLink]="['info']" routerLinkActive="active">
+        Basic Information <span [ngClass]="{'icon ion-alert custom-icon': !isValid('info')}"></span>
       </a>
-      <a [routerLink]="['tags']">
-        Search Tags
+      <a class="nav-link" [routerLink]="['tags']" routerLinkActive="active">
+        Search Tags <span [ngClass]="{'icon ion-alert custom-icon': !isValid('tags')}"></span>
       </a>
     </div>
     <router-outlet></router-outlet>

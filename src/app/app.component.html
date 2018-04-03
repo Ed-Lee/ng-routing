@@ -2,15 +2,15 @@
   <nav class="navbar navbar-expand bg-light">
     <div class="container-fluid">
       <a class="navbar-brand">{{pageTitle}}</a>
-      <ul class="nav mr-auto float-left">
+      <ul class="nav nav-pills mr-auto float-left">
         <li class="nav-item">
-          <a routerLink="/welcome" class="nav-link">Home</a>
+          <a routerLink="/welcome" routerLinkActive="active" class="nav-link">Home</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/products" class="nav-link">Product List</a>
+          <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Product List</a>
         </li>
         <li class="nav-item">
-          <a [routerLink]="['/products', 0, 'edit']" class="nav-link">Add Product</a>
+          <a [routerLink]="['/products', 0, 'edit']" routerLinkActive="active" class="nav-link">Add Product</a>
         </li>
       </ul>
       <ul class="nav nav-fill justify-content-end">
