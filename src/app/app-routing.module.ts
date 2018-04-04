@@ -4,16 +4,20 @@ import {WelcomeComponent} from "./home/welcome.component";
 import {LoginComponent} from "./user/login.component";
 import {ProductListComponent} from "./products/product-list.component";
 import {PageNotFoundComponent} from "./page-not-found.component";
+import { AuthGuardService } from './user/auth-guard.service';
 
 const routes: Routes = [
   {path: 'welcome', component: WelcomeComponent},
   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+  {path: 'products',
+    canActivate: [AuthGuardService],
+    loadChildren: 'app/products/product.module#ProductModule'},
   {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    enableTracing: true,
+    enableTracing: false,
     useHash: true
   })],
   exports: [RouterModule]

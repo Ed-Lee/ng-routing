@@ -12,50 +12,45 @@ import { RouterModule } from '@angular/router';
 import { ProductResolverService } from './product-resolver.service';
 import { ProductEditInfoComponent } from './product-edit-info.component';
 import { ProductEditTagsComponent } from './product-edit-tags.component';
-import { AuthGuardService } from '../user/auth-guard.service';
 import { ProductGuardService } from './product-guard.service';
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
-      {
-        path: 'products',
-        canActivate: [AuthGuardService],
-        children: [
-          {path: '', component: ProductListComponent},
-          {
-            path: ':id', component: ProductDetailComponent,
-            resolve: {product: ProductResolverService}
-          },
-          {
-            path: ':id/edit', component: ProductEditComponent,
-            resolve: {product: ProductResolverService},
-            canDeactivate: [ProductGuardService],
-            children: [
-              {path: '', redirectTo: 'info', pathMatch: 'full'},
-              {path: 'info', component: ProductEditInfoComponent},
-              {path: 'tags', component: ProductEditTagsComponent},
-            ]
-          }
-        ]
-      },
-
-    ])
-  ],
-  declarations: [
-    ProductListComponent,
-    ProductDetailComponent,
-    ProductEditComponent,
-    ProductFilterPipe,
-    ProductEditInfoComponent,
-    ProductEditTagsComponent
-  ],
-  providers: [
-    ProductService,
-    ProductResolverService,
-    ProductGuardService
-  ]
+        {path: '', component: ProductListComponent},
+        {
+          path: ':id', component: ProductDetailComponent,
+          resolve: {product: ProductResolverService}
+        },
+        {
+          path: ':id/edit', component: ProductEditComponent,
+          resolve: {product: ProductResolverService},
+          canDeactivate: [ProductGuardService],
+          children: [
+            {path: '', redirectTo: 'info', pathMatch: 'full'},
+            {path: 'info', component: ProductEditInfoComponent},
+            {path: 'tags', component: ProductEditTagsComponent},
+          ]
+        }
+      ]
+    )],
+  declarations:
+    [
+      ProductListComponent,
+      ProductDetailComponent,
+      ProductEditComponent,
+      ProductFilterPipe,
+      ProductEditInfoComponent,
+      ProductEditTagsComponent
+    ],
+  providers:
+    [
+      ProductService,
+      ProductResolverService,
+      ProductGuardService
+    ]
 })
+
 export class ProductModule {
 }
