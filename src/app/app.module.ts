@@ -25,7 +25,7 @@ import {environment} from "../environments/environment";
     BrowserModule,
     HttpClientModule,
     environment.production ? [] :
-    HttpClientInMemoryWebApiModule.forRoot(ProductData, {delay: 100}),
+    HttpClientInMemoryWebApiModule.forRoot(ProductData, {delay: 2000}),
     ProductModule,
     UserModule,
     MessageModule,
