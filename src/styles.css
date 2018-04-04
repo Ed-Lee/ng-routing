@@ -32,10 +32,10 @@ li {
   to {
     opacity: 1;
   }
-}*/
+} */
 
 /* Slide transition */
-/*pm-app div.panel.panel-primary {
+pm-app div.panel.panel-primary {
     animation-duration: .5s;
     animation-name: slideIn;
     animation-fill-mode: forwards;
@@ -50,7 +50,7 @@ li {
   to {
     transform: translate(0px);
   }
-}*/
+}
 
 /* Spinner */
 .spinner {
