@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'welcome', component: WelcomeComponent},
   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
   {path: 'products',
-    canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService],
     loadChildren: 'app/products/product.module#ProductModule'},
   {path: '**', component: PageNotFoundComponent}
 ];
