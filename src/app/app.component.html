@@ -8,7 +8,8 @@
           <a routerLink="/welcome" routerLinkActive="active" class="nav-link">Home</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Product List</a>
+          <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+             class="nav-link">Product List</a>
         </li>
         <li class="nav-item">
           <a [routerLink]="['/products', 0, 'edit']" routerLinkActive="active" class="nav-link">Add Product</a>
@@ -18,8 +19,13 @@
         <li class="nav-item" *ngIf="authService.isLoggedIn()">
           <a class="nav-link">Welcome {{ authService.currentUser.userName }}</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link">Show Messages</a>
+        <li *ngIf="!messageService.isDisplayed" class="nav-item">
+          <a (click)="displayMessage()"
+            class="nav-link">Show Messages</a>
+        </li>
+        <li *ngIf="messageService.isDisplayed" class="nav-item">
+          <a (click)="hideMessage()"
+             class="nav-link">Hide Messages</a>
         </li>
         <li class="nav-item" *ngIf="!authService.isLoggedIn()">
           <a [routerLink]="['/login']" class="nav-link">Log In</a>
@@ -31,6 +37,13 @@
     </div>
   </nav>
   <div class="container">
-    <router-outlet></router-outlet>
+    <div class="row">
+      <div class="col-md-9">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="col-md-3">
+        <router-outlet name="popup"></router-outlet>
+      </div>
+    </div>
   </div>
 </div>

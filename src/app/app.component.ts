@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { AuthService } from './user/auth.service';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, Event } from '@angular/router';
+import { MessageService } from './messages/message.service';
 
 @Component({
   selector: 'pm-app',
@@ -14,7 +15,8 @@ export class AppComponent {
 
   constructor(
     public authService: AuthService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.router.events.subscribe(
       (routerEvent: Event) => {
@@ -22,6 +24,17 @@ export class AppComponent {
       }
     )
   }
+
+  displayMessage() {
+    this.router.navigate([{outlets: {popup: ['message']}}]);
+    this.messageService.isDisplayed = true;
+  }
+
+  hideMessage() {
+    this.messageService.isDisplayed = false;
+    this.router.navigate([{outlets: {popup: null}}]);
+  }
+
 
   checkRouterEvent(routerEvent: Event): void {
     if (routerEvent instanceof NavigationStart) {
